@@ -105,31 +105,31 @@ exports.handler = async (event) => {
                     ReturnValues: "ALL_NEW"
                 };
 
-                let response
+                let resp
                 await docClient.update(params, function (err, data) {
                     if (!err) {
 
                         if (Object.keys(data.Attributes).length === 1) {
-                            response = {
+                            resp = {
                                 statusCode: 200,
                                 body: `El envio con id ${id} no existe`
                             }
                         }
                         else {
-                            response = {
+                            resp = {
                                 statusCode: 200,
                                 body: data.Attributes
                             }
                         }
                     } else {
-                        response = {
+                        resp = {
                             statusCode: 400,
                             body: 'Fallo la actualizacion del envio seleccionado'
                         }
                     }
                 }).promise();
 
-                return response
+                return resp
             }
             else {
                 return {
