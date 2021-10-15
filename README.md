@@ -34,7 +34,7 @@
 #### GET: 
 http://127.0.0.1:3000/envios
 #### POST: 
-http://127.0.0.1:3000/envios/pendientes
+http://127.0.0.1:3000/envios/
 ```
 Body:
 {
