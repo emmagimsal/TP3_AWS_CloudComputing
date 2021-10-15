@@ -1,0 +1,59 @@
+// Creamos la tabla
+var params = {
+  TableName: "Envio",
+  KeySchema: [
+    {
+      AttributeName: "id",
+      KeyType: "HASH",
+    },
+  ],
+  AttributeDefinitions: [
+    {
+      AttributeName: "id",
+      AttributeType: "S",
+    },
+  ],
+  ProvisionedThroughput: {
+    ReadCapacityUnits: 1,
+    WriteCapacityUnits: 1,
+  },
+};
+
+dynamodb.createTable(params, function (err, data) {
+  if (err) ppJson(err);
+  // an error occurred
+  else ppJson(data); // successful response
+});
+
+//Generamos los indices
+var params = {
+  TableName: "Envio",
+  AttributeDefinitions: [
+    { AttributeName: "id", AttributeType: "S" },
+    { AttributeName: "pendiente", AttributeType: "S" },
+  ],
+  GlobalSecondaryIndexUpdates: [
+    {
+      Create: {
+        IndexName: "EnviosPendientesIndex",
+        KeySchema: [
+          { AttributeName: "id", KeyType: "HASH" }, //Partition key
+          { AttributeName: "pendiente", KeyType: "RANGE" }, //Sort key
+        ],
+        Projection: {
+          ProjectionType: "ALL",
+        },
+        ProvisionedThroughput: {
+          // Only specified if using provisioned mode
+          ReadCapacityUnits: 1,
+          WriteCapacityUnits: 1,
+        },
+      },
+    },
+  ],
+};
+dynamodb.updateTable(params, function (err, data) {
+  if (err) ppJson(err);
+  // an error occurred
+  else ppJson(data); // successful response
+});
