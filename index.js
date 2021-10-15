@@ -123,7 +123,7 @@ exports.handler = async (event) => {
                         }
                     } else {
                         resp = {
-                            statusCode: 400,
+                            statusCode: 500,
                             body: 'Fallo la actualizacion del envio seleccionado'
                         }
                     }
